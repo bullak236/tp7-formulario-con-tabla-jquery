@@ -1,7 +1,9 @@
 $(document).ready(function () {
 
+    // Activar DataTable
     $('#miTabla').DataTable();
 
+    // Evento del formulario
     $("#formulario").submit(function (event) {
 
         event.preventDefault();
@@ -13,8 +15,9 @@ $(document).ready(function () {
 
         // Expresiones regulares
         let soloLetras = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/;
+        let soloNumeros = /^[0-9]+$/;
 
-        // Validaciones
+        // Validar nombre
         if (!soloLetras.test(nombre)) {
 
             alert("El nombre solo debe tener letras");
@@ -22,6 +25,7 @@ $(document).ready(function () {
 
         }
 
+        // Validar apellido
         if (!soloLetras.test(apellido)) {
 
             alert("El apellido solo debe tener letras");
@@ -29,6 +33,7 @@ $(document).ready(function () {
 
         }
 
+        // Validar DNI
         if (!soloNumeros.test(dni)) {
 
             alert("El DNI solo debe tener números");
@@ -36,17 +41,15 @@ $(document).ready(function () {
 
         }
 
-        let fila = `
-            <tr>
-                <td>${nombre}</td>
-                <td>${apellido}</td>
-                <td>${dni}</td>
-                <td>${correo}</td>
-            </tr>
-        `;
+        // Agregar fila a la tabla
+        $('#miTabla').DataTable().row.add([
+            nombre,
+            apellido,
+            dni,
+            correo
+        ]).draw();
 
-        $("#tablaDatos").append(fila);
-
+        // Limpiar formulario
         $("#formulario")[0].reset();
 
     });
